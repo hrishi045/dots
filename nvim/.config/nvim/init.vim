@@ -42,7 +42,7 @@ endif
 
 syntax on
 let g:onedark_color_overrides = {
-  \ "black": {"gui": "#000000", "cterm": "0", "cterm16": "0" },
+  \ "black": {"gui": "#0f0f0f", "cterm": "0", "cterm16": "0" },
   \}
 
 colorscheme onedark

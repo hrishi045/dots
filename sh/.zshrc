@@ -32,3 +32,8 @@ zplugin load lukechilds/zsh-nvm
 source $HOME/.profile
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey -e
+bindkey '^[[1;5C' emacs-forward-word                        # [Ctrl-RightArrow] - move forward one word
+bindkey '^[[1;5D' emacs-backward-word                       # [Ctrl-LeftArrow] - move backward one word
+
