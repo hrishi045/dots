@@ -91,14 +91,14 @@ reverse-scroll = true
 format = <label-state> <label-mode>
 label-focused = %index%
 label-focused-foreground = ${color.fg}
-label-focused-background = ${color.shade1}
-label-focused-underline = ${color.shade1}
+label-focused-background = ${color.shade2}
+label-focused-underline = ${color.shade2}
 label-focused-padding = 2
 
 label-unfocused = %index%
 label-unfocused-foreground = ${color.fg}
-label-unfocused-background = ${color.shade2}
-label-unfocused-underline = ${color.shade2}
+label-unfocused-background = ${color.shade1}
+label-unfocused-underline = ${color.shade1}
 label-unfocused-padding = 2
 
 label-visible = %index%
@@ -128,13 +128,6 @@ label-song-maxlen = 25
 label-song-ellipsis = true
 
 ;==========================================================
-
-[module/pkg]
-type = custom/script
-exec = updates.sh
-format-background = ${color.shade2}
-format-padding = 2
-tail = true
 
 [module/battery]
 type = internal/battery
@@ -206,11 +199,10 @@ tail = true
 
 [module/date]
 type = internal/date
-interval = 30
+interval = 5
 label =  %time%
 label-padding = 2
-label-background = ${color.shade2}
-time =  %I:%M %p
-time-alt =  %Y-%m-%d
+label-background = ${color.bg}
+time = %I:%M:%S %p | %Y-%m-%d
 
 ;== EOF ========================================================
