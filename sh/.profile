@@ -10,3 +10,5 @@ export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 export ANDROID_AVD_HOME="$HOME/.android/avd"
 
 export GEM_HOME=$HOME/.gem
+export EDITOR="nvim"
+export BROWSER="chromium"
