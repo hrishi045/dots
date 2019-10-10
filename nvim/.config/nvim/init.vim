@@ -5,9 +5,10 @@ set showmatch	" Highlight matching brace
 set hlsearch	" Highlight all search results
 set smartcase	" Enable smart-case search
 set ignorecase	" Always case-insensitive
-set shiftwidth=2	" Number of auto-indent spaces
+set shiftwidth=4	" Number of auto-indent spaces
 set smarttab	" Enable smart-tabs
-set softtabstop=2	" Number of spaces per Tab
+set softtabstop=4	" Number of spaces per Tab
+set tabstop=4
 set ruler	" Show row and column ruler information
 set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour
@@ -36,24 +37,27 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
-Plug 'joshdick/onedark.vim'
 Plug 'haya14busa/is.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'mattn/emmet-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ayu-theme/ayu-vim'
+Plug 'rainglow/vim'
 
 call plug#end()
 
 let mapleader = ","
 
 " Themes
-let g:onedark_color_overrides = {
-  \ "black": {"gui": "#0f0f0f", "cterm": "0", "cterm16": "0" },
-  \}
-set background=dark
-colorscheme onedark
-let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ }
+set termguicolors     " enable true colors support
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
+
+" IndentLine
+let g:indentLine_char = '┆'
 
 " vim-asterisk
 map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
@@ -167,7 +171,29 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-"Filetype associations
+" fzf.vim
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+nnoremap <C-p> :FZF<Cr>
+nnoremap <C-f> :Rg<Cr>
+
+" coc-prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Filetype associations
 autocmd FileType json syntax match Comment +\/\/.\+$+ " Highlight comments in JSON files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 

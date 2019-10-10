@@ -16,3 +16,5 @@ if [ -d $HOME/.shellrc/rc.d ]; then
     source $file
   done
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

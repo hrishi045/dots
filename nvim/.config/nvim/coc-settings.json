@@ -11,5 +11,8 @@
 	}
       }
     }
-  }
+  },
+  "html.filetypes": [
+    "html", "handlebars", "jst"
+  ]
 }
