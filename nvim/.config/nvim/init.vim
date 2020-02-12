@@ -46,6 +46,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ayu-theme/ayu-vim'
 Plug 'rainglow/vim'
+Plug 'racer-rust/vim-racer'
+
 
 call plug#end()
 

@@ -1,8 +1,9 @@
 source ~/.zplugin/bin/zplugin.zsh
 
-autoload -U compinit promptinit
+autoload -U compinit promptinit select-word-style
 compinit
 promptinit
+select-word-style bash
 prompt redhat
 
 autoload -Uz _zplugin
@@ -36,3 +37,5 @@ source $HOME/.profile
 bindkey -e
 bindkey '^[[1;5C' emacs-forward-word
 bindkey '^[[1;5D' emacs-backward-word
+
+source /usr/share/nvm/init-nvm.sh

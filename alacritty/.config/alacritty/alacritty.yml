@@ -84,7 +84,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -174,7 +174,7 @@ colors:
   # Default colors
   primary:
     background: '0x0A0E14'
-    foreground: '0xB3B1AD'
+    foreground: '0xEEEEEE'
 
   # Normal colors
   potato:

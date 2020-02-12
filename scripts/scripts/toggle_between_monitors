@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-intern=eDP-1-0
+intern=eDP-1-1
 extern=HDMI-0
 
 if xrandr | grep "$extern disconnected"; then
