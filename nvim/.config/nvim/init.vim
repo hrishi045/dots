@@ -22,10 +22,6 @@ set hidden
 filetype plugin indent on
 syntax on
 
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 call plug#begin()
 
 Plug 'tpope/vim-sensible'
@@ -47,16 +43,17 @@ Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ayu-theme/ayu-vim'
 Plug 'rainglow/vim'
 Plug 'racer-rust/vim-racer'
-
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
 let mapleader = ","
 
 " Themes
-set termguicolors     " enable true colors support
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+"set termguicolors     " enable true colors support
+"let ayucolor="dark"   " for dark version of theme
+set background=dark
+colorscheme nord
 
 " IndentLine
 let g:indentLine_char = '┆'
