@@ -17,7 +17,9 @@ set nocursorline
 set guicursor=
 set autoindent
 set smartindent
+set cursorline
 set hidden
+set t_Co=256
 
 filetype plugin indent on
 syntax on
@@ -51,7 +53,7 @@ call plug#end()
 let mapleader = ","
 
 " Themes
-"set termguicolors     " enable true colors support
+set termguicolors     " enable true colors support
 "let ayucolor="dark"   " for dark version of theme
 let g:nord_cursor_line_number_background = 1
 let g:nord_bold_vertical_split_line = 1
@@ -62,7 +64,6 @@ let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
 colorscheme nord
-
 let g:lightline = { 'colorscheme': 'nord' }
 
 " IndentLine
