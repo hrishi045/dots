@@ -20,19 +20,21 @@ set smartindent
 set cursorline
 set hidden
 set t_Co=256
+set mouse=a
 
 filetype plugin indent on
 syntax on
 
 call plug#begin()
 
+Plug 'metalelf0/supertab'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'itchyny/lightline.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'haya14busa/is.vim'
@@ -44,9 +46,12 @@ Plug 'Yggdroot/indentLine'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ayu-theme/ayu-vim'
 Plug 'rainglow/vim'
-Plug 'racer-rust/vim-racer'
 Plug 'arcticicestudio/nord-vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'neovim/nvim-lsp'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete-lsp'
+Plug 'Chiel92/vim-autoformat'
 
 call plug#end()
 
@@ -63,9 +68,22 @@ let g:nord_italic = 1
 let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
-colorscheme nord
-let g:lightline = { 'colorscheme': 'nord' }
 
+augroup nord-theme-overrides
+	autocmd!
+	autocmd ColorScheme nord highlight vimCommentTitle ctermfg=14 guifg=#8FBCBB
+	autocmd ColorScheme nord highlight Normal ctermbg=1 guibg=1
+	autocmd ColorScheme nord highlight SignColumn ctermbg=1 guibg=1
+	autocmd ColorScheme nord highlight LineNr ctermbg=1 guibg=1
+	autocmd ColorScheme nord highlight CursorLine ctermbg=2 guibg=#232831
+augroup END
+
+colorscheme nord
+
+" Test: Testing something
+" TODO: fix this shit
+
+let g:lightline = { 'colorscheme': 'nord' }
 " IndentLine
 let g:indentLine_char = '┆'
 
@@ -80,122 +98,21 @@ map z#  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
 map gz# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
 let g:asterisk#keeppos = 1
 
-" coc.nvim
-set cmdheight=2
-set updatetime=300
-set shortmess+=c
-set nobackup
-set nowritebackup
-set signcolumn=yes
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-inoremap <silent><expr> <c-space> coc#refresh()
-
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <C-d> <Plug>(coc-range-select)
-xmap <silent> <C-d> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
 " fzf.vim
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+			\ { 'fg':      ['fg', 'Normal'],
+			\ 'bg':      ['bg', 'Normal'],
+			\ 'hl':      ['fg', 'Comment'],
+			\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+			\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+			\ 'hl+':     ['fg', 'Statement'],
+			\ 'info':    ['fg', 'PreProc'],
+			\ 'border':  ['fg', 'Ignore'],
+			\ 'prompt':  ['fg', 'Conditional'],
+			\ 'pointer': ['fg', 'Exception'],
+			\ 'marker':  ['fg', 'Keyword'],
+			\ 'spinner': ['fg', 'Label'],
+			\ 'header':  ['fg', 'Comment'] }
 
 nnoremap <C-p> :FZF<Cr>
 nnoremap <C-f> :Rg<Cr>
@@ -207,3 +124,15 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 autocmd FileType json syntax match Comment +\/\/.\+$+ " Highlight comments in JSON files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 
+" racer.vim
+"let g:racer_cmd='/home/hrishi/.cargo/bin/racer'
+"let g:racer_experimental_completer = 1
+
+" Rust
+lua require'nvim_lsp'.rust_analyzer.setup{}
+autocmd FileType rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#source('_', 'max_menu_width', 80)
+let g:SuperTagDefaultCompletionType = "<c-n>"
+autocmd BufWrite * :Autoformat
+nnoremap <leader>c :!cargo clippy
