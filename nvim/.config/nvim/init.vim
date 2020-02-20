@@ -34,7 +34,6 @@ Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'itchyny/lightline.vim'
 Plug 'editorconfig/editorconfig-vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'haya14busa/is.vim'
@@ -52,6 +51,7 @@ Plug 'neovim/nvim-lsp'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp'
 Plug 'Chiel92/vim-autoformat'
+Plug 'vim-scripts/SingleCompile'
 
 call plug#end()
 
@@ -59,7 +59,6 @@ let mapleader = ","
 
 " Themes
 set termguicolors     " enable true colors support
-"let ayucolor="dark"   " for dark version of theme
 let g:nord_cursor_line_number_background = 1
 let g:nord_bold_vertical_split_line = 1
 let g:nord_uniform_diff_background = 1
@@ -79,9 +78,6 @@ augroup nord-theme-overrides
 augroup END
 
 colorscheme nord
-
-" Test: Testing something
-" TODO: fix this shit
 
 let g:lightline = { 'colorscheme': 'nord' }
 " IndentLine
@@ -124,10 +120,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 autocmd FileType json syntax match Comment +\/\/.\+$+ " Highlight comments in JSON files
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 
-" racer.vim
-"let g:racer_cmd='/home/hrishi/.cargo/bin/racer'
-"let g:racer_experimental_completer = 1
-
 " Rust
 lua require'nvim_lsp'.rust_analyzer.setup{}
 autocmd FileType rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -136,3 +128,6 @@ call deoplete#custom#source('_', 'max_menu_width', 80)
 let g:SuperTagDefaultCompletionType = "<c-n>"
 autocmd BufWrite * :Autoformat
 nnoremap <leader>c :!cargo clippy
+
+" Compile
+nnoremap <C-k> :SCCompileRun<cr>
