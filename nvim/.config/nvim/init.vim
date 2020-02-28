@@ -21,6 +21,7 @@ set cursorline
 set hidden
 set t_Co=256
 set mouse=a
+set conceallevel=0
 
 filetype plugin indent on
 syntax on
@@ -62,9 +63,9 @@ set termguicolors     " enable true colors support
 let g:nord_cursor_line_number_background = 1
 let g:nord_bold_vertical_split_line = 1
 let g:nord_uniform_diff_background = 1
-let g:nord_bold = 1
-let g:nord_italic = 1
-let g:nord_underline = 1
+"let g:nord_bold = 1
+"let g:nord_italic = 1
+"let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
 
@@ -131,3 +132,15 @@ nnoremap <leader>c :!cargo clippy
 
 " Compile
 nnoremap <C-k> :SCCompileRun<cr>
+
+" Vimwiki
+let wiki_style = {}
+let wiki_style.path = '~/wiki'
+let wiki_style.syntax = 'markdown'
+let wiki_style.ext = '.md'
+
+let g:vimwiki_list = [wiki_style]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
+autocmd FileType vimwiki set ft=markdown
+
